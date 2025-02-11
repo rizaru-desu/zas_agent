@@ -1,17 +1,24 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-PKGS=['os','sys','ConfigParser','argparse','struct','multiprocessing','socket','time','logging','redis','numpy','fnmatch','re','signal','daemonize','simplejson']
+import importlib.util
+
+PKGS = [
+    'os', 'sys', 'configparser', 'argparse', 'struct', 'multiprocessing',
+    'socket', 'time', 'logging', 'redis', 'numpy', 'fnmatch', 're',
+    'signal', 'simplejson'
+]
 
 for p in PKGS:
-    import imp
-    m_repr = "'%s'"%p
-    m_repr = m_repr.ljust(20,".")
-    print "Module %s"%m_repr,
+    m_repr = f"'{p}'"
+    m_repr = m_repr.ljust(20, ".")
+    print(f"Module {m_repr}", end=" ")
+
     try:
-        fp, pathname, description = imp.find_module(p)
-        imp.load_module(p, fp, pathname, description)
-    except:
-        print "FAIL"
-        continue
-    finally:
-        print "OK"
+        spec = importlib.util.find_spec(p)
+        if spec is None:
+            raise ImportError
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        print("OK")
+    except ImportError:
+        print("FAIL")
