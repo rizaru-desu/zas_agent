@@ -16,7 +16,7 @@ setup(
         ]
     },
     data_files=[
-        ('~/.zas', ['etc/network.scenario'])
+        ('~/.zas', ['etc/network.scenario']),
         ("~/etc", ["etc/zas_scenario.cfg"]),
         ("~/usr/share/zas_agent", ["doc/zas-agent-0.1.1.pdf"]),
         ("~/usr/share/man/man1", ["doc/zas_agent.py.1"])
